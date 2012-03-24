@@ -57,3 +57,5 @@ group :development, :test do
   gem 'rails3-generators'
 end
 
+gem 'devise'
+
