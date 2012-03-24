@@ -7,10 +7,12 @@ gem 'rails', '3.2.2'
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'therubyracer'
 end
 
 group :production do
   gem 'pg'
+  gem 'therubyracer-heroku'
 end
 
 
@@ -43,7 +45,6 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-gem 'therubyracer'
 gem 'haml-rails'
 gem 'kaminari'
 
@@ -55,7 +56,11 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'rails3-generators', '0.17.3'
+  gem 'capybara'
+  gem 'capybara-webkit'
 end
 
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-yammer'
 
