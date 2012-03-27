@@ -1,7 +1,10 @@
 Jpyammer::Application.routes.draw do
+  match '/auth/:provider/callback' => 'authentications#callback'
+  match '/auth/failure' => 'authentications#failure'
+  
   devise_for :users
 
-  get "home/index"
+  get 'home/index'
 
   root :to => 'home#index'
 
