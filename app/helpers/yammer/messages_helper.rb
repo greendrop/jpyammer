@@ -1,0 +1,2 @@
+module Yammer::MessagesHelper
+end

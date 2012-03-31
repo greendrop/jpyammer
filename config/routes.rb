@@ -1,4 +1,6 @@
 Jpyammer::Application.routes.draw do
+  get "messages/my_feed"
+
   match '/auth/:provider/callback' => 'authentications#callback'
   match '/auth/failure' => 'authentications#failure'
   
