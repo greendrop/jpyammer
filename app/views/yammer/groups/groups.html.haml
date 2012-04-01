@@ -1,2 +1,13 @@
 %h1 Yammer::Groups#groups
-%p Find me in app/views/yammer/groups/groups.html.haml
+
+#groups_list
+  - if @groups.size > 0
+    = paginate @groups
+    %br
+    - @groups.each do |group|
+      .group
+        .full_name
+          = link_to group['full_name'], :controller => '/yammer/messages', :action => 'in_group', :id => group['id']
+    %br
+    = paginate @groups
+

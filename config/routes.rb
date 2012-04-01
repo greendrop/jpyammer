@@ -1,7 +1,10 @@
 Jpyammer::Application.routes.draw do
-  get "groups/groups"
+  get 'yammer/groups/groups'
 
-  get "messages/my_feed"
+  get 'yammer/messages/my_feed'
+  get 'yammer/messages/private'
+  get 'yammer/messages/in_group'
+  get 'yammer/messages/in_thread'
 
   match '/auth/:provider/callback' => 'authentications#callback'
   match '/auth/failure' => 'authentications#failure'

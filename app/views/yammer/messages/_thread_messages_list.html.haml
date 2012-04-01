@@ -1,0 +1,22 @@
+#messages_list
+  - if @messages.size > 0
+    = paginate @messages
+    %br
+    - @messages.each do |message|
+      .message
+        .sender_user
+          .full_name
+            %b
+              = message['sender_user']['full_name']
+        .body
+          = raw(html_escape(message['body']['plain']).gsub(/\r\n|\r|\n/, '<br />'))
+        .created_at
+          created_at:
+          = message['created_at']
+        .liked_by
+          .count
+            like:
+            = message['liked_by']['count']
+    %br
+    = paginate @messages
+

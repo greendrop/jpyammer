@@ -8,7 +8,7 @@
     = yield :head
   %body
     .topbar
-
+      = link_to 'Home', root_url
     .container-fluid
       #contens_flash
         - if notice.present?

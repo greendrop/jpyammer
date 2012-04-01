@@ -6,6 +6,12 @@
     = current_user.email
     %ul
       %li
+        = link_to 'My Feed', :controller => '/yammer/messages', :action => 'my_feed'
+      %li
+        = link_to 'Private', :controller => '/yammer/messages', :action => 'private'
+      %li
+        = link_to 'Groups', :controller => '/yammer/groups', :action => 'groups'
+      %li
         = link_to 'Authentication Yammer', '/auth/yammer'
       %li
         = link_to 'Sign out', destroy_user_session_path, :method => 'delete'
