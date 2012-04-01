@@ -19,6 +19,7 @@
             = message['liked_by']['count']
         .in_thread
           = link_to 'in_thread', :controller => '/yammer/messages', :action => 'in_thread', :id => message['id']
+      %hr
     %br
     = paginate @messages
 

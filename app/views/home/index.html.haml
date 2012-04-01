@@ -1,6 +1,8 @@
-%h1 Home#index
+.subtitle
+  %b
+    Home
 
-#user_nav  
+#home_nav  
   - if user_signed_in?
     Signed in as
     = current_user.email
