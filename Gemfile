@@ -64,4 +64,5 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-yammer'
 gem 'rest-client'
+gem 'jpmobile'
 
