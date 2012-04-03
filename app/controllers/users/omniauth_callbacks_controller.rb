@@ -1,7 +1,7 @@
-class AuthenticationsController < ApplicationController
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_filter :authenticate_user!
 
-  def callback
+  def yammer
     omniauth = request.env['omniauth.auth']
     @authentication = Authentication.find_by_user_id(current_user.id)
     if @authentication == nil
@@ -12,10 +12,6 @@ class AuthenticationsController < ApplicationController
     @authentication.uid = omniauth['uid']
     @authentication.access_token = omniauth['credentials']['token']
     @authentication.save!
-    redirect_to root_url
-  end
-
-  def failure
     redirect_to root_url
   end
 end

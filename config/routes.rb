@@ -6,10 +6,7 @@ Jpyammer::Application.routes.draw do
   get 'yammer/messages/in_group'
   get 'yammer/messages/in_thread'
 
-  match '/auth/:provider/callback' => 'authentications#callback'
-  match '/auth/failure' => 'authentications#failure'
-  
-  devise_for :users
+  devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks"}
 
   get 'home/index'
 

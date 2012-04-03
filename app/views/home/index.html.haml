@@ -14,10 +14,7 @@
       %li
         = link_to 'Groups', :controller => '/yammer/groups', :action => 'groups'
       %li
-        - if params.key?('_session_id')
-          = link_to 'Authentication Yammer', "/auth/yammer?_session_id=#{params['_session_id']}"
-        - else
-          = link_to 'Authentication Yammer', '/auth/yammer'
+        = link_to 'Authentication Yammer', user_omniauth_authorize_path(:yammer)
       %li
         = link_to 'Sign out', destroy_user_session_path, :method => 'delete'
   - else
