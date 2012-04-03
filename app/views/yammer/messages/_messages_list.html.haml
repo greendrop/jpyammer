@@ -2,23 +2,27 @@
   - if @messages.size > 0
     = paginate @messages
     %br
+    %hr
     - @messages.each do |message|
       .message
         .sender_user
+          .mugshot
+            = image_tag message['sender_user']['mugshot_url'], :align => 'left'
           .full_name
             %b
               = message['sender_user']['full_name']
+          %br{:clear => 'left'}
         .body
-          = raw(html_escape(message['body']['plain']).gsub(/\r\n|\r|\n/, '<br />'))
+          = raw(html_escape(truncate(message['body']['plain'])).gsub(/\r\n|\r|\n/, '<br />'))
         .created_at
-          created_at:
-          = message['created_at']
+          created at:
+          = Time.parse(message['created_at']).strftime('%Y/%m/%d %H:%M:%S')
         .liked_by
           .count
             like:
             = message['liked_by']['count']
         .in_thread
-          = link_to 'in_thread', :controller => '/yammer/messages', :action => 'in_thread', :id => message['id']
+          = link_to 'show', :controller => '/yammer/messages', :action => 'in_thread', :id => message['id']
       %hr
     %br
     = paginate @messages

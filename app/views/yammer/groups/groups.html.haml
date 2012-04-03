@@ -8,8 +8,12 @@
     %br
     - @groups.each do |group|
       .group
+        .mugshot
+          = image_tag group['mugshot_url'], :align => 'left'
         .full_name
           = link_to group['full_name'], :controller => '/yammer/messages', :action => 'in_group', :id => group['id']
+        %br{:clear => 'left'}
+        %br
     %br
     = paginate @groups
 

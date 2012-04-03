@@ -8,15 +8,15 @@
     = yield :head
   %body
     .topbar
-      = link_to 'Home', root_url
+      = link_to image_tag('home.gif') + 'Home', root_url
     .container-fluid
       #contens_flash
         - if notice.present?
           %p
-            = notice
+            = image_tag('info.gif') + notice
         - if alert.present?
           %p
-            = alert
+            = image_tag('error.gif') + alert
       #contens_main
         = yield
 
