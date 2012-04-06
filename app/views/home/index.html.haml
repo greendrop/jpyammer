@@ -12,6 +12,8 @@
       %li
         = link_to 'Private', :controller => '/yammer/messages', :action => 'private'
       %li
+        = link_to 'Company Feed', :controller => '/yammer/messages', :action => 'company_feed'
+      %li
         = link_to 'Groups', :controller => '/yammer/groups', :action => 'groups'
       %li
         = link_to 'Authenticate Yammer', user_omniauth_authorize_path(:yammer)

@@ -3,6 +3,7 @@ Jpyammer::Application.routes.draw do
 
   get 'yammer/messages/my_feed'
   get 'yammer/messages/private'
+  get 'yammer/messages/company_feed'
   get 'yammer/messages/in_group'
   get 'yammer/messages/in_thread'
 
