@@ -10,13 +10,9 @@ describe "yammer/messages/private" do
       ).and_return(
         JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_private)
       )
-      @messages = Yammer::Messages.get_private({})
+      @messages = Yammer::Messages.get_private({})['messages']
       @messages = Kaminari.paginate_array(@messages).page(1)
-
-      assign(
-        :messages,
-        @messages
-      )
+      assign(:messages, @messages)
     end
 
     it 'renders' do

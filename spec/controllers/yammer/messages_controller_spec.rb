@@ -85,6 +85,9 @@ describe Yammer::MessagesController do
         message['id'].should == 79537463
         message['sender_user']['full_name'].should == 'mikeal'
         message['sender_user']['mugshot_url'].should == 'https://assets3.yammer.com/images/no_photo_small.gif'
+        group = assigns(:group)
+        group['full_name'].should == 'yammer-test-group'
+        group['mugshot_url'].should == 'https://assets2.yammer.com/images/group_profile_small.gif'
       end
 
       it "returns http success, no id" do

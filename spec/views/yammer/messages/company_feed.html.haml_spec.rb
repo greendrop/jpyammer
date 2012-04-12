@@ -10,13 +10,9 @@ describe "yammer/messages/company_feed" do
       ).and_return(
         JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_company_feed)
       )
-      @messages = Yammer::Messages.get_my_feed({})
+      @messages = Yammer::Messages.get_my_feed({})['messages']
       @messages = Kaminari.paginate_array(@messages).page(1)
-
-      assign(
-        :messages,
-        @messages
-      )
+      assign(:messages, @messages)
     end
 
     it 'renders' do

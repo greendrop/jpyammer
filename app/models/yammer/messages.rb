@@ -10,31 +10,26 @@ class Yammer::Messages < Yammer::Base
   def self.get_my_feed(params)
     response = get(URL[:my_feed], params)
     response = join_references(response)
-    messages = response['messages']
   end
 
   def self.get_private(params)
     response = get(URL[:private], params)
     response = join_references(response)
-    messages = response['messages']
   end
 
   def self.get_company_feed(params)
     response = get(URL[:company_feed], params)
     response = join_references(response)
-    messages = response['messages']
   end
 
   def self.get_in_group(id, params)
     response = get(URL[:in_group].gsub(/__ID__/, id.to_s), params)
     response = join_references(response)
-    messages = response['messages']
   end
 
   def self.get_in_thread(id, params)
     response = get(URL[:in_thread].gsub(/__ID__/, id.to_s), params)
     response = join_references(response)
-    messages = response['messages'].reverse
   end
 
   private

@@ -1,6 +1,14 @@
 .subtitle
   %b
     In group
+.group
+  .mugshot
+    = image_tag @group['mugshot_url'], :align => 'left'
+  .full_name
+    %b
+      = @group['full_name']
+  %br{:clear => 'left'}
+%br
 
 = render 'messages_list'
 

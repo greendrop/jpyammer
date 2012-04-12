@@ -10,19 +10,27 @@ describe "yammer/messages/in_group" do
       ).and_return(
         JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_in_group)
       )
-      @messages = Yammer::Messages.get_in_group(nil, {})
+      @messages = Yammer::Messages.get_in_group(nil, {})['messages']
       @messages = Kaminari.paginate_array(@messages).page(1)
+      assign(:messages, @messages)
 
-      assign(
-        :messages,
-        @messages
-      )
+      @group = {}
+      @group['full_name'] = 'yammer-test-group'
+      @group['mugshot_url'] = 'https://assets2.yammer.com/images/group_profile_small.gif'
+      assign(:group, @group)
     end
 
     it 'renders' do
       render
 
       assert_select 'div.subtitle b', :text => 'In group'
+
+      assert_select 'div.group' do
+        assert_select 'div.mugshot',
+          :html => image_tag(@group['mugshot_url'], :align => 'left')
+        assert_select 'div.full_name b',
+          :text => @group['full_name']
+      end
 
       assert_select 'div#messages_list' do
         assert_select 'div.message', :count => 1

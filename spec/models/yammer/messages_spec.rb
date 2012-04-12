@@ -9,7 +9,8 @@ describe Yammer::Messages do
         JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_my_feed)
       )
 
-      messages = Yammer::Messages.get_my_feed({})
+      res = Yammer::Messages.get_my_feed({})
+      messages = res['messages']
       messages.size.should == 7
       
       message = messages[0]
@@ -30,7 +31,8 @@ describe Yammer::Messages do
         JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_private)
       )
 
-      messages = Yammer::Messages.get_private({})
+      res = Yammer::Messages.get_private({})
+      messages = res['messages']
       messages.size.should == 1
       
       message = messages[0]
@@ -51,7 +53,8 @@ describe Yammer::Messages do
         JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_company_feed)
       )
 
-      messages = Yammer::Messages.get_company_feed({})
+      res = Yammer::Messages.get_company_feed({})
+      messages = res['messages']
       messages.size.should == 18
       
       message = messages[0]
@@ -72,7 +75,8 @@ describe Yammer::Messages do
         JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_in_group)
       )
 
-      messages = Yammer::Messages.get_in_group(nil, {})
+      res = Yammer::Messages.get_in_group(nil, {})
+      messages = res['messages']
       messages.size.should == 1
       
       message = messages[0]
@@ -82,6 +86,16 @@ describe Yammer::Messages do
       message['id'].should == 79537463
       message['sender_user']['full_name'].should == 'mikeal'
       message['sender_user']['mugshot_url'].should == 'https://assets3.yammer.com/images/no_photo_small.gif'
+
+      group = {}
+      res['references'].each do |reference|
+        case reference['type']
+        when 'group'
+          group = reference
+        end
+      end
+      group['full_name'].should == 'yammer-test-group'
+      group['mugshot_url'].should == 'https://assets2.yammer.com/images/group_profile_small.gif'
     end
   end
 
@@ -93,7 +107,8 @@ describe Yammer::Messages do
         JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_in_thread)
       )
 
-      messages = Yammer::Messages.get_in_thread(nil, {})
+      res = Yammer::Messages.get_in_thread(nil, {})
+      messages = res['messages'].reverse
       messages.size.should == 2
       
       message = messages[0]
