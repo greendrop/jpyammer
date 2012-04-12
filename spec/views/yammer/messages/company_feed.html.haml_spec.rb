@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "yammer/messages/my_feed" do
+describe "yammer/messages/company_feed" do
   describe 'login user' do
     login_user
 
@@ -8,7 +8,7 @@ describe "yammer/messages/my_feed" do
       Yammer::Base.stub(
         :get
       ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_my_feed)
+        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_company_feed)
       )
       @messages = Yammer::Messages.get_my_feed({})
       @messages = Kaminari.paginate_array(@messages).page(1)
@@ -22,7 +22,7 @@ describe "yammer/messages/my_feed" do
     it 'renders' do
       render
 
-      assert_select 'div.subtitle b', :text => 'My feed'
+      assert_select 'div.subtitle b', :text => 'Company feed'
 
       assert_select 'div#messages_list' do
         assert_select 'div.message', :count => 5

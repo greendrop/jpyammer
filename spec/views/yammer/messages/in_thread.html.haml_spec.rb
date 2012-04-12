@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "yammer/messages/my_feed" do
+describe "yammer/messages/in_thread" do
   describe 'login user' do
     login_user
 
@@ -8,9 +8,9 @@ describe "yammer/messages/my_feed" do
       Yammer::Base.stub(
         :get
       ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_my_feed)
+        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_in_thread)
       )
-      @messages = Yammer::Messages.get_my_feed({})
+      @messages = Yammer::Messages.get_in_thread(nil, {})
       @messages = Kaminari.paginate_array(@messages).page(1)
 
       assign(
@@ -22,10 +22,10 @@ describe "yammer/messages/my_feed" do
     it 'renders' do
       render
 
-      assert_select 'div.subtitle b', :text => 'My feed'
+      assert_select 'div.subtitle b', :text => 'In thread'
 
       assert_select 'div#messages_list' do
-        assert_select 'div.message', :count => 5
+        assert_select 'div.message', :count => 2
 
         assert_select 'div.message' do
           assert_select 'div.sender_user' do
@@ -45,9 +45,6 @@ describe "yammer/messages/my_feed" do
             assert_select 'div.count',
               :text => "like:\n#{@messages[0]['liked_by']['count']}"
           end
-
-          assert_select 'div.in_thread',
-            :html => link_to('show', :controller => '/yammer/messages', :action => 'in_thread', :id => @messages[0]['id'])
         end
       end
     end

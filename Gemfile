@@ -56,8 +56,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'rails3-generators', '0.17.3'
-  gem 'capybara'
-  gem 'capybara-webkit'
 end
 
 gem 'devise'

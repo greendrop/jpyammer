@@ -3,7 +3,7 @@ class Yammer::MessagesController < ApplicationController
 
   def my_feed
     auth = Authentication.find_by_user_id(current_user.id)
-    if auth
+    if auth && auth.access_token
       yammer_params = {
         :access_token => auth.access_token,
         :threaded => 'extended'
@@ -23,7 +23,7 @@ class Yammer::MessagesController < ApplicationController
 
   def private
     auth = Authentication.find_by_user_id(current_user.id)
-    if auth
+    if auth && auth.access_token
       yammer_params = {
         :access_token => auth.access_token,
         :threaded => 'extended'
@@ -43,7 +43,7 @@ class Yammer::MessagesController < ApplicationController
 
   def company_feed
     auth = Authentication.find_by_user_id(current_user.id)
-    if auth
+    if auth && auth.access_token
       yammer_params = {
         :access_token => auth.access_token,
         :threaded => 'extended'
@@ -63,12 +63,16 @@ class Yammer::MessagesController < ApplicationController
 
   def in_group
     auth = Authentication.find_by_user_id(current_user.id)
-    if auth
-      yammer_params = {
-        :access_token => auth.access_token,
-        :threaded => 'extended'
-      }
-      @messages = Yammer::Messages.get_in_group(params[:id], yammer_params)
+    if auth && auth.access_token
+      if params[:id]
+        yammer_params = {
+          :access_token => auth.access_token,
+          :threaded => 'extended'
+        }
+        @messages = Yammer::Messages.get_in_group(params[:id], yammer_params)
+      else
+        @messages = []
+      end
     else
       @messages = []
       flash[:error] = "Don't authenticate Yammer"
@@ -83,11 +87,15 @@ class Yammer::MessagesController < ApplicationController
 
   def in_thread
     auth = Authentication.find_by_user_id(current_user.id)
-    if auth
-      yammer_params = {
-        :access_token => auth.access_token
-      }
-      @messages = Yammer::Messages.get_in_thread(params[:id], yammer_params)
+    if auth && auth.access_token
+      if params[:id]
+        yammer_params = {
+          :access_token => auth.access_token
+        }
+        @messages = Yammer::Messages.get_in_thread(params[:id], yammer_params)
+      else
+        @messages = []
+      end
     else
       @messages = []
       flash[:error] = "Don't authenticate Yammer"

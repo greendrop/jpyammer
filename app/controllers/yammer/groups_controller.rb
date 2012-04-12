@@ -3,7 +3,7 @@ class Yammer::GroupsController < ApplicationController
 
   def groups
     auth = Authentication.find_by_user_id(current_user.id)
-    if auth
+    if auth && auth.access_token
       yammer_params = {
         :access_token => auth.access_token
       }
