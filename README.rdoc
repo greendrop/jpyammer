@@ -1,6 +1,6 @@
 = jpyammer - Yammer for keitai
 
-エンタープライズSNS「Yammer」 https://www.yammer.com を日本の携帯電話から使用するためのゲートウェイサイトアプリケーションです。
+エンタープライズSNS「Yammer」 https://www.yammer.com を日本の携帯電話から使用するためのゲートウェイアプリケーションです。
 
 
 == 動作環境
