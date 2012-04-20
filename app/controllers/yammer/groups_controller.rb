@@ -7,7 +7,7 @@ class Yammer::GroupsController < ApplicationController
       yammer_params = {
         :access_token => auth.access_token
       }
-      @groups = Yammer::Groups.get_groups(yammer_params)
+      @groups = Yammer::Groups.new.get_groups(yammer_params)
     else
       @groups = []
       flash[:error] = "Don't authenticate Yammer"

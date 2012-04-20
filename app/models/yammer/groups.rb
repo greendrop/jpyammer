@@ -1,9 +1,7 @@
 class Yammer::Groups < Yammer::Base
-  URL = {
-    :groups => 'https://www.yammer.com/api/v1/groups.json'
-  }
-
-  def self.get_groups(params)
-    get URL[:groups], params
+  def get_groups(params = {})
+    params.merge!(:resource => 'groups')
+    response = JSON.parse(yammer_request(:get, params).body)
   end
 end
+

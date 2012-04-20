@@ -5,12 +5,13 @@ describe "yammer/messages/company_feed" do
     login_user
 
     before(:each) do
-      Yammer::Base.stub(
-        :get
-      ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_company_feed)
-      )
-      @messages = Yammer::Messages.get_my_feed({})['messages']
+      res = Object.new
+      def res.body
+        Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_company_feed)
+      end
+      Yammer::Messages.any_instance.stub(:yammer_request).and_return(res)
+
+      @messages = Yammer::Messages.new.get_my_feed({})['messages']
       @messages = Kaminari.paginate_array(@messages).page(1)
       assign(:messages, @messages)
     end
@@ -18,7 +19,7 @@ describe "yammer/messages/company_feed" do
     it 'renders' do
       render
 
-      assert_select 'div.subtitle b', :text => 'Company feed'
+      assert_select 'div.subtitle b', :text => 'Company Feed'
 
       assert_select 'div#messages_list' do
         assert_select 'div.message', :count => 5
@@ -43,7 +44,7 @@ describe "yammer/messages/company_feed" do
           end
 
           assert_select 'div.in_thread',
-            :html => link_to('show', :controller => '/yammer/messages', :action => 'in_thread', :id => @messages[0]['id'])
+            :html => link_to('Show', :controller => '/yammer/messages', :action => 'in_thread', :id => @messages[0]['id'])
         end
       end
     end

@@ -5,12 +5,12 @@ describe "yammer/groups/groups" do
     login_user
 
     before(:each) do
-      Yammer::Base.stub(
-        :get
-      ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Groups.get_dummy_data(:get_groups)
-      )
-      @groups = Yammer::Groups.get_groups({})
+      res = Object.new
+      def res.body
+        Spec::Support::Models::Yammer::Groups.get_dummy_data(:get_groups)
+      end
+      Yammer::Groups.any_instance.stub(:yammer_request).and_return(res)
+      @groups = Yammer::Groups.new.get_groups({})
       @groups = Kaminari.paginate_array(@groups).page(1)
 
       assign(
@@ -35,5 +35,5 @@ describe "yammer/groups/groups" do
       end
     end
   end
-
 end
+

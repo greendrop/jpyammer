@@ -8,7 +8,8 @@
     %b
       = @group['full_name']
   %br{:clear => 'left'}
-%br
+.send_message
+  = link_to 'Send', :controller => '/yammer/messages', :action => 'new', :group_id => @group['id']
 
 = render 'messages_list'
 

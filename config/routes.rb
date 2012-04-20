@@ -6,6 +6,8 @@ Jpyammer::Application.routes.draw do
   get 'yammer/messages/company_feed'
   get 'yammer/messages/in_group'
   get 'yammer/messages/in_thread'
+  get 'yammer/messages/new'
+  post 'yammer/messages', :to => 'yammer/messages#create'
 
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks"}
 

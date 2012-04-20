@@ -1,39 +1,43 @@
 class Yammer::Messages < Yammer::Base
-  URL = {
-    :my_feed => 'https://www.yammer.com/api/v1/messages/following.json',
-    :private => 'https://www.yammer.com/api/v1/messages/private.json',
-    :company_feed => 'https://www.yammer.com/api/v1/messages.json',
-    :in_group => 'https://www.yammer.com/api/v1/messages/in_group/__ID__.json',
-    :in_thread => 'https://www.yammer.com/api/v1/messages/in_thread/__ID__.json'
-  }
-
-  def self.get_my_feed(params)
-    response = get(URL[:my_feed], params)
+  def get_messages(params = {})
+    params.merge!(:resource => 'messages')
+    response = JSON.parse(yammer_request(:get, params).body)
     response = join_references(response)
   end
 
-  def self.get_private(params)
-    response = get(URL[:private], params)
-    response = join_references(response)
+  def get_my_feed(params = {})
+    params.merge!(:action => 'following')
+    response = get_messages(params)
   end
 
-  def self.get_company_feed(params)
-    response = get(URL[:company_feed], params)
-    response = join_references(response)
+  def get_private(params = {})
+    params.merge!(:action => 'private')
+    response = get_messages(params)
   end
 
-  def self.get_in_group(id, params)
-    response = get(URL[:in_group].gsub(/__ID__/, id.to_s), params)
-    response = join_references(response)
+  def get_company_feed(params = {})
+    response = get_messages(params)
   end
 
-  def self.get_in_thread(id, params)
-    response = get(URL[:in_thread].gsub(/__ID__/, id.to_s), params)
-    response = join_references(response)
+  def get_in_group(id, params = {})
+    params.merge!(:action => 'in_group')
+    params.merge!(:id => id.to_s)
+    response = get_messages(params)
+  end
+
+  def get_in_thread(id, params = {})
+    params.merge!(:action => 'in_thread')
+    params.merge!(:id => id.to_s)
+    response = get_messages(params)
+  end
+
+  def post_messages(params = {})
+    params.merge!(:resource => 'messages')
+    response = JSON.parse(yammer_request(:post, params).body)
   end
 
   private
-    def self.join_references(response)
+    def join_references(response)
       users = {}
       response['references'].each do |reference|
         case reference['type']

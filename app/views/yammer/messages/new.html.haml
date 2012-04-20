@@ -1,0 +1,31 @@
+.subtitle
+  %b
+    - if @message_form.replied_to_id.present?
+      Reply
+    - else
+      New Message
+.to
+  %b
+    - if @message_form.to
+      To:
+      = @message_form.to
+  %br
+
+= form_for @message_form, :url => '/yammer/messages' do |f|
+  - if @message_form.errors.any?
+    #error_explanation
+      %p
+        = image_tag('error.gif') + "#{pluralize(@message_form.errors.count, "error")}"
+        %ul
+          - @message_form.errors.full_messages.each do |msg|
+            %li= msg
+    %br
+  .forms
+    = f.text_area :body
+    = f.hidden_field :group_id
+    = f.hidden_field :replied_to_id
+    = f.hidden_field :direct_to_id
+    = f.hidden_field :to
+  .action
+    = f.submit 'Send'
+

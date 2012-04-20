@@ -1,6 +1,8 @@
 .subtitle
   %b
-    My feed
+    My Feed
+.send_message
+  = link_to 'Send', :controller => '/yammer/messages', :action => 'new'
 
 = render 'messages_list'
 

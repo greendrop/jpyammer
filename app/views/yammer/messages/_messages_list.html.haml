@@ -1,7 +1,6 @@
 #messages_list
   - if @messages.size > 0
     = paginate @messages
-    %br
     %hr
     - @messages.each do |message|
       .message
@@ -22,7 +21,7 @@
             like:
             = message['liked_by']['count']
         .in_thread
-          = link_to 'show', :controller => '/yammer/messages', :action => 'in_thread', :id => message['id']
+          = link_to 'Show', :controller => '/yammer/messages', :action => 'in_thread', :id => message['id']
       %hr
     %br
     = paginate @messages

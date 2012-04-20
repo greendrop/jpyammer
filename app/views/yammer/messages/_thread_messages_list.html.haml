@@ -1,7 +1,6 @@
 #messages_list
   - if @messages.size > 0
     = paginate @messages
-    %br
     %hr
     - @messages.each do |message|
       .message
@@ -21,6 +20,8 @@
           .count
             like:
             = message['liked_by']['count']
+        .send_message
+          = link_to 'Reply', :controller => '/yammer/messages', :action => 'new', :replied_to_id => message['id']
       %hr
     %br
     = paginate @messages

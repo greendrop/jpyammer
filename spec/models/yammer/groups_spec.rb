@@ -3,13 +3,14 @@ require 'spec_helper'
 describe Yammer::Groups do
   context 'get_groups' do
     it do
-      Yammer::Base.stub(
-        :get
-      ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Groups.get_dummy_data(:get_groups)
-      )
+      yammer_groups = Yammer::Groups.new
+      response = Object.new
+      def response.body
+        Spec::Support::Models::Yammer::Groups.get_dummy_data(:get_groups)
+      end
+      yammer_groups.stub(:yammer_request).and_return(response)
 
-      groups = Yammer::Groups.get_groups({})
+      groups = yammer_groups.get_groups({})
       groups.size.should == 1
       
       group = groups[0]

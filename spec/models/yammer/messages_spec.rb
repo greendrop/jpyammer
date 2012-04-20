@@ -3,13 +3,14 @@ require 'spec_helper'
 describe Yammer::Messages do
   context 'get_my_feed' do
     it do
-      Yammer::Base.stub(
-        :get
-      ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_my_feed)
-      )
+      yammer_messages = Yammer::Messages.new
+      response = Object.new
+      def response.body
+        Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_my_feed)
+      end
+      yammer_messages.stub(:yammer_request).and_return(response)
 
-      res = Yammer::Messages.get_my_feed({})
+      res = yammer_messages.get_my_feed({})
       messages = res['messages']
       messages.size.should == 7
       
@@ -25,13 +26,14 @@ describe Yammer::Messages do
 
   context 'get_private' do
     it do
-      Yammer::Base.stub(
-        :get
-      ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_private)
-      )
+      yammer_messages = Yammer::Messages.new
+      response = Object.new
+      def response.body
+        Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_private)
+      end
+      yammer_messages.stub(:yammer_request).and_return(response)
 
-      res = Yammer::Messages.get_private({})
+      res = yammer_messages.get_private({})
       messages = res['messages']
       messages.size.should == 1
       
@@ -47,13 +49,14 @@ describe Yammer::Messages do
 
   context 'get_company_feed' do
     it do
-      Yammer::Base.stub(
-        :get
-      ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_company_feed)
-      )
+      yammer_messages = Yammer::Messages.new
+      response = Object.new
+      def response.body
+        Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_company_feed)
+      end
+      yammer_messages.stub(:yammer_request).and_return(response)
 
-      res = Yammer::Messages.get_company_feed({})
+      res = yammer_messages.get_company_feed({})
       messages = res['messages']
       messages.size.should == 18
       
@@ -69,13 +72,14 @@ describe Yammer::Messages do
 
   context 'get_in_group' do
     it do
-      Yammer::Base.stub(
-        :get
-      ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_in_group)
-      )
+      yammer_messages = Yammer::Messages.new
+      response = Object.new
+      def response.body
+        Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_in_group)
+      end
+      yammer_messages.stub(:yammer_request).and_return(response)
 
-      res = Yammer::Messages.get_in_group(nil, {})
+      res = yammer_messages.get_in_group(nil, {})
       messages = res['messages']
       messages.size.should == 1
       
@@ -101,13 +105,14 @@ describe Yammer::Messages do
 
   context 'get_in_thread' do
     it do
-      Yammer::Base.stub(
-        :get
-      ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_in_thread)
-      )
+      yammer_messages = Yammer::Messages.new
+      response = Object.new
+      def response.body
+        Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_in_thread)
+      end
+      yammer_messages.stub(:yammer_request).and_return(response)
 
-      res = Yammer::Messages.get_in_thread(nil, {})
+      res = yammer_messages.get_in_thread(nil, {})
       messages = res['messages'].reverse
       messages.size.should == 2
       
@@ -118,6 +123,21 @@ describe Yammer::Messages do
       message['id'].should == 79392326
       message['sender_user']['full_name'].should == 'mikeal'
       message['sender_user']['mugshot_url'].should == 'https://assets3.yammer.com/images/no_photo_small.gif'
+    end
+  end
+
+  context 'post_messages' do
+    it do
+      yammer_messages = Yammer::Messages.new
+      response = Object.new
+      def response.body
+        Spec::Support::Models::Yammer::Messages.get_dummy_data(:post_messages)
+      end
+      yammer_messages.stub(:yammer_request).and_return(response)
+
+      res = yammer_messages.post_messages({})
+      messages = res['messages']
+      messages.size.should == 1
     end
   end
 end

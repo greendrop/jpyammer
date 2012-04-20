@@ -5,12 +5,13 @@ describe "yammer/messages/private" do
     login_user
 
     before(:each) do
-      Yammer::Base.stub(
-        :get
-      ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_private)
-      )
-      @messages = Yammer::Messages.get_private({})['messages']
+      res = Object.new
+      def res.body
+        Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_private)
+      end
+      Yammer::Messages.any_instance.stub(:yammer_request).and_return(res)
+
+      @messages = Yammer::Messages.new.get_private({})['messages']
       @messages = Kaminari.paginate_array(@messages).page(1)
       assign(:messages, @messages)
     end
@@ -43,7 +44,7 @@ describe "yammer/messages/private" do
           end
 
           assert_select 'div.in_thread',
-            :html => link_to('show', :controller => '/yammer/messages', :action => 'in_thread', :id => @messages[0]['id'])
+            :html => link_to('Show', :controller => '/yammer/messages', :action => 'in_thread', :id => @messages[0]['id'])
         end
       end
     end

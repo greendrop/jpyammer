@@ -5,12 +5,13 @@ describe "yammer/messages/in_thread" do
     login_user
 
     before(:each) do
-      Yammer::Base.stub(
-        :get
-      ).and_return(
-        JSON.parse Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_in_thread)
-      )
-      @messages = Yammer::Messages.get_in_thread(nil, {})['messages'].reverse
+      res = Object.new
+      def res.body
+        Spec::Support::Models::Yammer::Messages.get_dummy_data(:get_in_thread)
+      end
+      Yammer::Messages.any_instance.stub(:yammer_request).and_return(res)
+
+      @messages = Yammer::Messages.new.get_in_thread(nil, {})['messages'].reverse
       @messages = Kaminari.paginate_array(@messages).page(1)
       assign(:messages, @messages)
     end

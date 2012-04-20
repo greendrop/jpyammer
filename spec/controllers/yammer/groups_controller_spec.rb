@@ -6,11 +6,11 @@ describe Yammer::GroupsController do
 
     describe "GET 'groups'" do
       it "returns http success" do
-        Yammer::Base.stub(
-          :get
-        ).and_return(
-          JSON.parse Spec::Support::Models::Yammer::Groups.get_dummy_data(:get_groups)
-        )
+        res = Object.new
+        def res.body
+          Spec::Support::Models::Yammer::Groups.get_dummy_data(:get_groups)
+        end
+        Yammer::Groups.any_instance.stub(:yammer_request).and_return(res)
 
         get 'groups'
         response.should be_success
@@ -28,12 +28,6 @@ describe Yammer::GroupsController do
 
     describe "GET 'groups'" do
       it "returns http success" do
-        Yammer::Base.stub(
-          :get
-        ).and_return(
-          JSON.parse Spec::Support::Models::Yammer::Groups.get_dummy_data(:get_groups)
-        )
-
         get 'groups'
         response.should be_success
         assigns(:groups).size.should == 0
