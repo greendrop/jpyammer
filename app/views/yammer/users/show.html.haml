@@ -1,0 +1,28 @@
+.user
+  .mugshot
+    = image_tag @user['mugshot_url'], :align => 'left'
+  .full_name
+    = @user['full_name']
+  %br{:clear => 'left'}
+%br
+
+.send
+  = link_to 'Send Private Message', new_yammer_messages_path(:direct_to_id => @user['id'])
+- if @user['contact']
+  - if @user['contact']['email_addresses']
+    %br
+    .email_addresses
+      Email:
+      %br
+      - @user['contact']['email_addresses'].each do |email_address|
+        = mail_to(email_address['address'])
+        %br
+  -if @user['contact']['phone_numbers']
+    %br
+    .phone_numbers
+      Phone Number:
+      %br
+      - @user['contact']['phone_numbers'].each do |phone_number|
+        = phone_number['number']
+        %br
+

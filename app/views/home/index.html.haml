@@ -8,13 +8,15 @@
     = current_user.email
     %ul
       %li
-        = link_to 'My Feed', :controller => '/yammer/messages', :action => 'my_feed'
+        = link_to 'My Feed', my_feed_yammer_messages_path
       %li
-        = link_to 'Private', :controller => '/yammer/messages', :action => 'private'
+        = link_to 'Private', private_yammer_messages_path
       %li
-        = link_to 'Company Feed', :controller => '/yammer/messages', :action => 'company_feed'
+        = link_to 'Company Feed', company_feed_yammer_messages_path
       %li
-        = link_to 'Groups', :controller => '/yammer/groups', :action => 'groups'
+        = link_to 'Groups', yammer_groups_path
+      %li
+        = link_to 'Users', yammer_users_path
       %li
         = link_to 'Authenticate Yammer', user_omniauth_authorize_path(:yammer)
       %li

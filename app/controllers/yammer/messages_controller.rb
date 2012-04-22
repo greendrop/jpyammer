@@ -24,7 +24,7 @@ class Yammer::MessagesController < ApplicationController
         res = Yammer::Groups.new.get_group(@message_form.group_id, yammer_params)
         @message_form.to = res['full_name']
       elsif @message_form.direct_to_id.present?
-        res = Yammer::Groups.new.get_user(@message_form.direct_to_id, yammer_params)
+        res = Yammer::Users.new.get_user(@message_form.direct_to_id, yammer_params)
         @message_form.to = res['full_name']
       end
     end

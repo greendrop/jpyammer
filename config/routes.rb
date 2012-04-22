@@ -1,13 +1,32 @@
 Jpyammer::Application.routes.draw do
-  get 'yammer/groups/groups'
+  get 'yammer/users',
+    :to => 'yammer/users#index',
+    :as => 'yammer_users'
+  get 'yammer/users/:id',
+    :to => 'yammer/users#show',
+    :as => 'show_yammer_users'
 
-  get 'yammer/messages/my_feed'
-  get 'yammer/messages/private'
-  get 'yammer/messages/company_feed'
-  get 'yammer/messages/in_group'
-  get 'yammer/messages/in_thread'
-  get 'yammer/messages/new'
-  post 'yammer/messages', :to => 'yammer/messages#create'
+  get 'yammer/groups',
+    :to => 'yammer/groups#groups',
+    :as => 'yammer_groups'
+
+  get 'yammer/messages/my_feed',
+    :as => 'my_feed_yammer_messages'
+  get 'yammer/messages/private',
+    :as => 'private_yammer_messages'
+  get 'yammer/messages/company_feed',
+    :as => 'company_feed_yammer_messages'
+  get 'yammer/messages/in_group/:id',
+    :to => 'yammer/messages#in_group',
+    :as => 'in_group_yammer_messages'
+  get 'yammer/messages/in_thread/:id',
+    :to => 'yammer/messages#in_thread',
+    :as => 'in_thread_yammer_messages'
+  get 'yammer/messages/new',
+    :to => 'yammer/messages#new',
+    :as => 'new_yammer_messages'
+  post 'yammer/messages',
+    :to => 'yammer/messages#create'
 
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks"}
 
