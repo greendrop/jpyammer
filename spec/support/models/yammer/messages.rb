@@ -1706,7 +1706,7 @@ module Spec
   ]
 }
               EOB
-            when :post_messages
+            when :post_message
               response = <<-EOB
 {
   "messages": [

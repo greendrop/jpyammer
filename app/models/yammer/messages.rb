@@ -31,7 +31,7 @@ class Yammer::Messages < Yammer::Base
     response = get_messages(params)
   end
 
-  def post_messages(params = {})
+  def post_message(params = {})
     params.merge!(:resource => 'messages')
     response = JSON.parse(yammer_request(:post, params).body)
   end

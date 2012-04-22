@@ -20,7 +20,7 @@ describe Yammer::MessagesController do
     describe 'POST create' do
       describe 'with valid params' do
         it 'redirects to the created message_form' do
-          Yammer::Messages.any_instance.stub(:post_messages).and_return({})
+          Yammer::Messages.any_instance.stub(:post_message).and_return({})
           post :create, :message_form => valid_attributes
           response.should redirect_to(root_url)
         end

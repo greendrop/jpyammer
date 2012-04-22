@@ -8,12 +8,25 @@ class Yammer::MessagesController < ApplicationController
       @message_form.to = 'Group'
     elsif params[:replied_to_id].present?
       @message_form.replied_to_id = params[:replied_to_id]
-      @message_form.to = 'Reply'
     elsif params[:direct_to_id].present?
       @message_form.direct_to_id = params[:direct_to_id]
       @message_form.to = 'Direct'
     else
       @message_form.to = 'Company'
+    end
+
+    auth = Authentication.find_by_user_id(current_user.id)
+    if auth && auth.access_token
+      yammer_params = {
+        :access_token => auth.access_token,
+      }
+      if @message_form.group_id.present?
+        res = Yammer::Groups.new.get_group(@message_form.group_id, yammer_params)
+        @message_form.to = res['full_name']
+      elsif @message_form.direct_to_id.present?
+        res = Yammer::Groups.new.get_user(@message_form.direct_to_id, yammer_params)
+        @message_form.to = res['full_name']
+      end
     end
 
     respond_to do |format|
@@ -37,7 +50,7 @@ class Yammer::MessagesController < ApplicationController
         elsif @message_form.direct_to_id.present?
           yammer_params[:direct_to_id] = @message_form.direct_to_id
         end
-        Yammer::Messages.new.post_messages(yammer_params)
+        Yammer::Messages.new.post_message(yammer_params)
         success = true
       end
     end

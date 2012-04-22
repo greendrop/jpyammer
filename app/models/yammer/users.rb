@@ -1,10 +1,8 @@
 class Yammer::Users < Yammer::Base
-  URL = {
-    :id => 'https://www.yammer.com/api/v1/users/__ID__.json'
-  }
-
-  def self.get_id(id, params)
-    get URL[:id].gsub(/__ID__/, id.to_s), params
+  def get_user(id, params = {})
+    params.merge!(:resource => 'users')
+    params.merge!(:id => id.to_s)
+    response = JSON.parse(yammer_request(:get, params).body)
   end
 end
 

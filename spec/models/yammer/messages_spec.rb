@@ -126,16 +126,16 @@ describe Yammer::Messages do
     end
   end
 
-  context 'post_messages' do
+  context 'post_message' do
     it do
       yammer_messages = Yammer::Messages.new
       response = Object.new
       def response.body
-        Spec::Support::Models::Yammer::Messages.get_dummy_data(:post_messages)
+        Spec::Support::Models::Yammer::Messages.get_dummy_data(:post_message)
       end
       yammer_messages.stub(:yammer_request).and_return(response)
 
-      res = yammer_messages.post_messages({})
+      res = yammer_messages.post_message({})
       messages = res['messages']
       messages.size.should == 1
     end
