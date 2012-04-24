@@ -179,5 +179,21 @@ class Yammer::MessagesController < ApplicationController
       format.html
     end
   end
+
+  def like
+    back_url = params[:back_url] ? params[:back_url] : root_url
+    auth = Authentication.find_by_user_id(current_user.id)
+    if auth && auth.access_token
+      yammer_params = {
+        :access_token => auth.access_token,
+        :message_id => params[:message_id]
+      }
+      Yammer::Messages.new.post_like(yammer_params)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to back_url, notice: 'Like send.' }
+    end
+  end
 end
 

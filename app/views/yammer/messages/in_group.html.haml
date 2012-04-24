@@ -9,7 +9,7 @@
       = @group['full_name']
   %br{:clear => 'left'}
 .send_message
-  = link_to 'Send', :controller => '/yammer/messages', :action => 'new', :group_id => @group['id']
+  = link_to image_tag('comment.gif') + ' Send Message', new_yammer_messages_path(:group_id => @group['id'])
 
 = render 'messages_list'
 

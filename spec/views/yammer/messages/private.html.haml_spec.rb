@@ -36,15 +36,13 @@ describe "yammer/messages/private" do
             :html => raw(ERB::Util.html_escape(truncate(@messages[0]['body']['plain'])).gsub(/\r\n|\r|\n/, '<br />'))
           
           assert_select 'div.created_at',
-            :text => "created at:\n#{Time.parse(@messages[0]['created_at']).strftime('%Y/%m/%d %H:%M:%S')}"
+            :text => "Created at:\n#{Time.parse(@messages[0]['created_at']).strftime('%Y/%m/%d %H:%M:%S')}"
 
-          assert_select 'div.liked_by' do
-            assert_select 'div.count',
-              :text => "like:\n#{@messages[0]['liked_by']['count']}"
-          end
+          assert_select 'div.liked_by',
+            :text => "Like:\n#{@messages[0]['liked_by']['count']}"
 
-          assert_select 'div.in_thread',
-            :html => link_to('Show', :controller => '/yammer/messages', :action => 'in_thread', :id => @messages[0]['id'])
+          assert_select "div.in_thread a[href=#{in_thread_yammer_messages_path(:id => @messages[0]['id'])}]",
+            :text => 'Show'
         end
       end
     end

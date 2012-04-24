@@ -28,8 +28,6 @@ module Yammer
           request_uri += "#{create_query_string(options)}" unless http_method == :post
         end
 
-        p request_uri
-        p options
         if http_method == :post
           handle_response(@access_token.send(http_method, request_uri, options))
         else

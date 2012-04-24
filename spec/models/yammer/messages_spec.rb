@@ -140,5 +140,22 @@ describe Yammer::Messages do
       messages.size.should == 1
     end
   end
+
+  context 'post_like' do
+    it do
+      yammer_messages = Yammer::Messages.new
+      response = Object.new
+      def response.body
+        ' '
+      end
+      yammer_messages
+        .should_receive(:yammer_request)
+        .with(:post, {:resource => 'messages', :action => 'liked_by', :id => 'current', :message_id => '1'})
+        .and_return(response)
+
+      res = yammer_messages.post_like({:message_id => '1'})
+      res.should == ' '
+    end
+  end
 end
 

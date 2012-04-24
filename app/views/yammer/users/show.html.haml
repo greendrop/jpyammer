@@ -7,7 +7,7 @@
 %br
 
 .send
-  = link_to 'Send Private Message', new_yammer_messages_path(:direct_to_id => @user['id'])
+  = link_to image_tag('comment.gif') + ' Send Private Message', new_yammer_messages_path(:direct_to_id => @user['id'])
 - if @user['contact']
   - if @user['contact']['email_addresses']
     %br

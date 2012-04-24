@@ -27,6 +27,8 @@ Jpyammer::Application.routes.draw do
     :as => 'new_yammer_messages'
   post 'yammer/messages',
     :to => 'yammer/messages#create'
+  post 'yammer/messages/like',
+    :as => 'like_yammer_messages'
 
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks"}
 

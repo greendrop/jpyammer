@@ -36,6 +36,13 @@ class Yammer::Messages < Yammer::Base
     response = JSON.parse(yammer_request(:post, params).body)
   end
 
+  def post_like(params = {})
+    params.merge!(:resource => 'messages')
+    params.merge!(:action => 'liked_by')
+    params.merge!(:id => 'current')
+    response = yammer_request(:post, params).body
+  end
+
   private
     def join_references(response)
       users = {}

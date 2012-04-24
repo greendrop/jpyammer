@@ -35,6 +35,14 @@ describe Yammer::MessagesController do
       end
     end
 
+    describe 'POST create' do
+      it 'redirects to posted like' do
+        Yammer::Messages.any_instance.stub(:post_like).and_return(' ')
+        post :like, :back_url => my_feed_yammer_messages_path
+        response.should redirect_to(my_feed_yammer_messages_path)
+      end
+    end
+
     describe "GET 'my_feed'" do
       it "returns http success" do
         res = Object.new

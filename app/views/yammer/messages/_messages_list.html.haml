@@ -14,14 +14,13 @@
         .body
           = raw(html_escape(truncate(message['body']['plain'])).gsub(/\r\n|\r|\n/, '<br />'))
         .created_at
-          created at:
+          Created at:
           = Time.parse(message['created_at']).strftime('%Y/%m/%d %H:%M:%S')
         .liked_by
-          .count
-            like:
-            = message['liked_by']['count']
+          = image_tag('thumbs_up.gif') + ' Like:'
+          = message['liked_by']['count']
         .in_thread
-          = link_to 'Show', :controller => '/yammer/messages', :action => 'in_thread', :id => message['id']
+          = link_to image_tag('view.gif') + ' Show', in_thread_yammer_messages_path(:id => message['id'])
       %hr
     %br
     = paginate @messages

@@ -14,14 +14,17 @@
         .body
           = raw(html_escape(message['body']['plain']).gsub(/\r\n|\r|\n/, '<br />'))
         .created_at
-          created at:
+          Created at:
           = Time.parse(message['created_at']).strftime('%Y/%m/%d %H:%M:%S')
         .liked_by
-          .count
-            like:
+          = form_tag(like_yammer_messages_path) do
+            = hidden_field_tag 'back_url', url_for(params)
+            = hidden_field_tag 'message_id', message['id']
+            = button_tag do
+              = image_tag('thumbs_up.gif') + ' Like'
             = message['liked_by']['count']
         .send_message
-          = link_to 'Reply', :controller => '/yammer/messages', :action => 'new', :replied_to_id => message['id']
+          = link_to image_tag('comment.gif') + ' Reply', new_yammer_messages_path(:replied_to_id => message['id'])
       %hr
     %br
     = paginate @messages
